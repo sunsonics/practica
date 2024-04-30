@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6c821886e12a4d48956b72929b8c045e" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="TechnoPark.client" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.employee" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.inventory" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.orderitem" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.orders" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.payment" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.product" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.record" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.role" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.service" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechnoPark.supply" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="TechnoPark.client_idroles_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.orders_idclient_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.record_idclient_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.employee_idrole_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.record_idemployee_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.inventory_idproduct_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.orderitem_idorder_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.orderitem_idproduct_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.payment_idorder_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.supply_idorder_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="TechnoPark.record_idservices_fkey" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

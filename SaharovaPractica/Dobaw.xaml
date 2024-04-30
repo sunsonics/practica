@@ -1,0 +1,64 @@
+﻿<Window x:Class="SaharovaPractica.Dobaw"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        mc:Ignorable="d"
+        Title="Добавление нового сотрудника" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,19,20,-86" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Height="41" Width="397" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Имя: " Width="114"/>
+                <TextBox x:Name="txtIma" Width="242" Text="{Binding name}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="399" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Фамилия: " Width="114" Height="39"/>
+                <TextBox x:Name="txtsurname" Width="243" Text="{Binding surname}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="402" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Отчество: " Width="115"/>
+                <TextBox x:Name="txtpatronymic" Width="243" Text="{Binding patronymic}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="403" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Электронная почта: " Width="116"/>
+                <TextBox x:Name="txtemail" Width="243" Text="{Binding email}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="407">
+                <Label Content="Должность:" Width="118"/>
+                <ComboBox x:Name="myComboBox" Width="243"  >
+
+                    <ComboBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-0.05"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ComboBox.RenderTransform>
+                    <ComboBoxItem Content="администратор" Tag="1"/>
+                    <ComboBoxItem Content="менеджер по продажам" Tag="2"/>
+                    <ComboBoxItem Content="автомойщик" Tag="3"/>
+                    <ComboBoxItem Content="складской работник" Tag="4"/>
+                    <ComboBoxItem Content="механик" Tag="5"/>
+
+
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,294,0,-149" Width="625" Grid.Row="1">
+            <Button Content="Сохранить" Click="SaveButton_Click" Height="38" Width="203"/>
+            <Button Content="Очистить" Click="CleanButton_Click" Width="202" Height="38"/>
+        </StackPanel>
+    </Grid>
+</Window>

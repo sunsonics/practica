@@ -1,0 +1,25 @@
+﻿<Window x:Class="SaharovaPractica.RedactYsug"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit Profile Window" Height="633" Width="408">
+    <Grid Margin="0,0,0,-6">
+
+        <StackPanel Height="381" Width="215">
+
+
+
+            <Label Content="Название:"/>
+            <TextBox Name="txtservicename" Text="{Binding servicename}" Margin="5" />
+            <TextBox Name="txtidservice" Text="{Binding idservice}" Margin="5" />
+            <Label Content="Описание:"/>
+            <TextBox Name="txtdescription" Text="{Binding description}" Margin="5" />
+
+            <Label Content="Цена:"/>
+            <TextBox Name="txtprice" Text="{Binding price}" Margin="5"   />
+
+            <Button Content="Сохранить изменения" Click="SaveChanges_Click" RenderTransformOrigin="-0.438,0.274" Width="178" Height="32" />
+            <Button Content="Удаление" Click="Changes_Click" RenderTransformOrigin="-0.438,0.274" Width="178" Height="32" />
+        </StackPanel>
+
+    </Grid>
+</Window>

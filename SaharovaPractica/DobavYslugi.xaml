@@ -1,0 +1,39 @@
+﻿<Window x:Class="SaharovaPractica.DobavYslugi"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        mc:Ignorable="d"
+        Title="Добавление новой услуги" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,92,20,-106" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Height="41" Width="397" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Название: " Width="114"/>
+                <TextBox x:Name="txtservicename" Width="242" Text="{Binding servicename}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="399" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Описание: " Width="114" Height="39"/>
+                <TextBox x:Name="txtdescription" Width="243" Text="{Binding description}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="41" Width="402" RenderTransformOrigin="0.509,-2.194">
+                <Label Content="Цена: " Width="115"/>
+                <TextBox x:Name="txtprice" Width="243" Text="{Binding price}"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,294,0,-149" Width="625" Grid.Row="1">
+            <Button Content="Сохранить" Click="SaveButton_Click" Height="38" Width="208"/>
+            <Button Content="Очистить" Click="CleanButton_Click" Width="202" Height="38"/>
+        </StackPanel>
+    </Grid>
+</Window>

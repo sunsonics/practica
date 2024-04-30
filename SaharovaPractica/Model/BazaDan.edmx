@@ -1,0 +1,768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TechnoPark" Provider="Npgsql" ProviderManifestToken="16.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="idclient" />
+          </Key>
+          <Property Name="idclient" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idroles" Type="int4" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="34" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="30" />
+          <Property Name="email" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="telephone" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="idemployee" />
+          </Key>
+          <Property Name="idemployee" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idrole" Type="int4" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="34" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="30" />
+          <Property Name="email" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="idinventory" />
+          </Key>
+          <Property Name="idinventory" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idproduct" Type="int4" Nullable="false" />
+          <Property Name="quantityinstock" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orderitem">
+          <Key>
+            <PropertyRef Name="idelement" />
+          </Key>
+          <Property Name="idelement" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idorder" Type="int4" Nullable="false" />
+          <Property Name="idproduct" Type="int4" Nullable="false" />
+          <Property Name="quantity" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="idorder" />
+          </Key>
+          <Property Name="idorder" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idclient" Type="int4" Nullable="false" />
+          <Property Name="orderdate" Type="date" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="idpayment" />
+          </Key>
+          <Property Name="idpayment" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idorder" Type="int4" Nullable="false" />
+          <Property Name="sum" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="dateofpayment" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="idproduct" />
+          </Key>
+          <Property Name="idproduct" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="price" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="record">
+          <Key>
+            <PropertyRef Name="idrecord" />
+          </Key>
+          <Property Name="idrecord" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idclient" Type="int4" Nullable="false" />
+          <Property Name="idemployee" Type="int4" Nullable="false" />
+          <Property Name="idservices" Type="int4" Nullable="false" />
+          <Property Name="recorddate" Type="date" Nullable="false" />
+          <Property Name="recordtime" Type="time" Precision="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="idrole" />
+          </Key>
+          <Property Name="idrole" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rolename" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="idservice" />
+          </Key>
+          <Property Name="idservice" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="servicename" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="description" Type="text" />
+          <Property Name="price" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supply">
+          <Key>
+            <PropertyRef Name="idsupply" />
+          </Key>
+          <Property Name="idsupply" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idorder" Type="int4" Nullable="false" />
+          <Property Name="dateofdelivery" Type="date" Nullable="false" />
+          <Property Name="deliveryaddress" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="client_idroles_fkey">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="idroles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_idrole_fkey">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="idrole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="inventory_idproduct_fkey">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="idproduct" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderitem_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="orderitem" Type="Self.orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="orderitem">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderitem_idproduct_fkey">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="orderitem" Type="Self.orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="idproduct" />
+            </Principal>
+            <Dependent Role="orderitem">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orders_idclient_fkey">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idclient" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idclient_fkey">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idclient" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idemployee_fkey">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idemployee" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idemployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idservices_fkey">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="idservice" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idservices" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supply_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="supply" Type="Self.supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="supply">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TechnoParkContainer">
+          <EntitySet Name="client" EntityType="Self.client" Schema="public" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="public" store:Type="Tables" />
+          <EntitySet Name="inventory" EntityType="Self.inventory" Schema="public" store:Type="Tables" />
+          <EntitySet Name="orderitem" EntityType="Self.orderitem" Schema="public" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="public" store:Type="Tables" />
+          <EntitySet Name="payment" EntityType="Self.payment" Schema="public" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="public" store:Type="Tables" />
+          <EntitySet Name="record" EntityType="Self.record" Schema="public" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="public" store:Type="Tables" />
+          <EntitySet Name="service" EntityType="Self.service" Schema="public" store:Type="Tables" />
+          <EntitySet Name="supply" EntityType="Self.supply" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="client_idroles_fkey" Association="Self.client_idroles_fkey">
+            <End Role="role" EntitySet="role" />
+            <End Role="client" EntitySet="client" />
+          </AssociationSet>
+          <AssociationSet Name="employee_idrole_fkey" Association="Self.employee_idrole_fkey">
+            <End Role="role" EntitySet="role" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="inventory_idproduct_fkey" Association="Self.inventory_idproduct_fkey">
+            <End Role="product" EntitySet="product" />
+            <End Role="inventory" EntitySet="inventory" />
+          </AssociationSet>
+          <AssociationSet Name="orderitem_idorder_fkey" Association="Self.orderitem_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderitem" EntitySet="orderitem" />
+          </AssociationSet>
+          <AssociationSet Name="orderitem_idproduct_fkey" Association="Self.orderitem_idproduct_fkey">
+            <End Role="product" EntitySet="product" />
+            <End Role="orderitem" EntitySet="orderitem" />
+          </AssociationSet>
+          <AssociationSet Name="orders_idclient_fkey" Association="Self.orders_idclient_fkey">
+            <End Role="client" EntitySet="client" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="payment_idorder_fkey" Association="Self.payment_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="record_idclient_fkey" Association="Self.record_idclient_fkey">
+            <End Role="client" EntitySet="client" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="record_idemployee_fkey" Association="Self.record_idemployee_fkey">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="record_idservices_fkey" Association="Self.record_idservices_fkey">
+            <End Role="service" EntitySet="service" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="supply_idorder_fkey" Association="Self.supply_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="supply" EntitySet="supply" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TechnoPark" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="idclient" />
+          </Key>
+          <Property Name="idclient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idroles" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="24" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="34" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone" Type="String" MaxLength="17" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="role" Relationship="Self.client_idroles_fkey" FromRole="client" ToRole="role" />
+          <NavigationProperty Name="orders" Relationship="Self.orders_idclient_fkey" FromRole="client" ToRole="orders" />
+          <NavigationProperty Name="record" Relationship="Self.record_idclient_fkey" FromRole="client" ToRole="record" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="idemployee" />
+          </Key>
+          <Property Name="idemployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idrole" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="24" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="34" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="role" Relationship="Self.employee_idrole_fkey" FromRole="employee" ToRole="role" />
+          <NavigationProperty Name="record" Relationship="Self.record_idemployee_fkey" FromRole="employee" ToRole="record" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="idinventory" />
+          </Key>
+          <Property Name="idinventory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idproduct" Type="Int32" Nullable="false" />
+          <Property Name="quantityinstock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.inventory_idproduct_fkey" FromRole="inventory" ToRole="product" />
+        </EntityType>
+        <EntityType Name="orderitem">
+          <Key>
+            <PropertyRef Name="idelement" />
+          </Key>
+          <Property Name="idelement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idorder" Type="Int32" Nullable="false" />
+          <Property Name="idproduct" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.orderitem_idorder_fkey" FromRole="orderitem" ToRole="orders" />
+          <NavigationProperty Name="product" Relationship="Self.orderitem_idproduct_fkey" FromRole="orderitem" ToRole="product" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="idorder" />
+          </Key>
+          <Property Name="idorder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idclient" Type="Int32" Nullable="false" />
+          <Property Name="orderdate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.orders_idclient_fkey" FromRole="orders" ToRole="client" />
+          <NavigationProperty Name="orderitem" Relationship="Self.orderitem_idorder_fkey" FromRole="orders" ToRole="orderitem" />
+          <NavigationProperty Name="payment" Relationship="Self.payment_idorder_fkey" FromRole="orders" ToRole="payment" />
+          <NavigationProperty Name="supply" Relationship="Self.supply_idorder_fkey" FromRole="orders" ToRole="supply" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="idpayment" />
+          </Key>
+          <Property Name="idpayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idorder" Type="Int32" Nullable="false" />
+          <Property Name="sum" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="dateofpayment" Type="DateTime" Precision="0" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.payment_idorder_fkey" FromRole="payment" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="idproduct" />
+          </Key>
+          <Property Name="idproduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productname" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="inventory" Relationship="Self.inventory_idproduct_fkey" FromRole="product" ToRole="inventory" />
+          <NavigationProperty Name="orderitem" Relationship="Self.orderitem_idproduct_fkey" FromRole="product" ToRole="orderitem" />
+        </EntityType>
+        <EntityType Name="record">
+          <Key>
+            <PropertyRef Name="idrecord" />
+          </Key>
+          <Property Name="idrecord" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idclient" Type="Int32" Nullable="false" />
+          <Property Name="idemployee" Type="Int32" Nullable="false" />
+          <Property Name="idservices" Type="Int32" Nullable="false" />
+          <Property Name="recorddate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="recordtime" Type="Time" Precision="6" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.record_idclient_fkey" FromRole="record" ToRole="client" />
+          <NavigationProperty Name="employee" Relationship="Self.record_idemployee_fkey" FromRole="record" ToRole="employee" />
+          <NavigationProperty Name="service" Relationship="Self.record_idservices_fkey" FromRole="record" ToRole="service" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="idrole" />
+          </Key>
+          <Property Name="idrole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rolename" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.client_idroles_fkey" FromRole="role" ToRole="client" />
+          <NavigationProperty Name="employee" Relationship="Self.employee_idrole_fkey" FromRole="role" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="idservice" />
+          </Key>
+          <Property Name="idservice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="servicename" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="record" Relationship="Self.record_idservices_fkey" FromRole="service" ToRole="record" />
+        </EntityType>
+        <EntityType Name="supply">
+          <Key>
+            <PropertyRef Name="idsupply" />
+          </Key>
+          <Property Name="idsupply" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idorder" Type="Int32" Nullable="false" />
+          <Property Name="dateofdelivery" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="deliveryaddress" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.supply_idorder_fkey" FromRole="supply" ToRole="orders" />
+        </EntityType>
+        <Association Name="client_idroles_fkey">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="idroles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orders_idclient_fkey">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idclient" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idclient_fkey">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idclient" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="employee_idrole_fkey">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="idrole" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="idrole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idemployee_fkey">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="idemployee" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idemployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="inventory_idproduct_fkey">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="idproduct" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderitem_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="orderitem" Type="Self.orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="orderitem">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orderitem_idproduct_fkey">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="orderitem" Type="Self.orderitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="idproduct" />
+            </Principal>
+            <Dependent Role="orderitem">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payment_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="supply_idorder_fkey">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="supply" Type="Self.supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="idorder" />
+            </Principal>
+            <Dependent Role="supply">
+              <PropertyRef Name="idorder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="record_idservices_fkey">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="idservice" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="idservices" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TechnoParkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="inventory" EntityType="Self.inventory" />
+          <EntitySet Name="orderitem" EntityType="Self.orderitem" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="payment" EntityType="Self.payment" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="record" EntityType="Self.record" />
+          <EntitySet Name="role" EntityType="Self.role" />
+          <EntitySet Name="service" EntityType="Self.service" />
+          <EntitySet Name="supply" EntityType="Self.supply" />
+          <AssociationSet Name="client_idroles_fkey" Association="Self.client_idroles_fkey">
+            <End Role="role" EntitySet="role" />
+            <End Role="client" EntitySet="client" />
+          </AssociationSet>
+          <AssociationSet Name="orders_idclient_fkey" Association="Self.orders_idclient_fkey">
+            <End Role="client" EntitySet="client" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="record_idclient_fkey" Association="Self.record_idclient_fkey">
+            <End Role="client" EntitySet="client" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="employee_idrole_fkey" Association="Self.employee_idrole_fkey">
+            <End Role="role" EntitySet="role" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="record_idemployee_fkey" Association="Self.record_idemployee_fkey">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="inventory_idproduct_fkey" Association="Self.inventory_idproduct_fkey">
+            <End Role="product" EntitySet="product" />
+            <End Role="inventory" EntitySet="inventory" />
+          </AssociationSet>
+          <AssociationSet Name="orderitem_idorder_fkey" Association="Self.orderitem_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderitem" EntitySet="orderitem" />
+          </AssociationSet>
+          <AssociationSet Name="orderitem_idproduct_fkey" Association="Self.orderitem_idproduct_fkey">
+            <End Role="product" EntitySet="product" />
+            <End Role="orderitem" EntitySet="orderitem" />
+          </AssociationSet>
+          <AssociationSet Name="payment_idorder_fkey" Association="Self.payment_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="supply_idorder_fkey" Association="Self.supply_idorder_fkey">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="supply" EntitySet="supply" />
+          </AssociationSet>
+          <AssociationSet Name="record_idservices_fkey" Association="Self.record_idservices_fkey">
+            <End Role="service" EntitySet="service" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TechnoParkContainer" CdmEntityContainer="TechnoParkEntities">
+          <EntitySetMapping Name="client">
+            <EntityTypeMapping TypeName="TechnoPark.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="idclient" ColumnName="idclient" />
+                <ScalarProperty Name="idroles" ColumnName="idroles" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="TechnoPark.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="idemployee" ColumnName="idemployee" />
+                <ScalarProperty Name="idrole" ColumnName="idrole" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory">
+            <EntityTypeMapping TypeName="TechnoPark.inventory">
+              <MappingFragment StoreEntitySet="inventory">
+                <ScalarProperty Name="idinventory" ColumnName="idinventory" />
+                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+                <ScalarProperty Name="quantityinstock" ColumnName="quantityinstock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderitem">
+            <EntityTypeMapping TypeName="TechnoPark.orderitem">
+              <MappingFragment StoreEntitySet="orderitem">
+                <ScalarProperty Name="idelement" ColumnName="idelement" />
+                <ScalarProperty Name="idorder" ColumnName="idorder" />
+                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="TechnoPark.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="idorder" ColumnName="idorder" />
+                <ScalarProperty Name="idclient" ColumnName="idclient" />
+                <ScalarProperty Name="orderdate" ColumnName="orderdate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment">
+            <EntityTypeMapping TypeName="TechnoPark.payment">
+              <MappingFragment StoreEntitySet="payment">
+                <ScalarProperty Name="idpayment" ColumnName="idpayment" />
+                <ScalarProperty Name="idorder" ColumnName="idorder" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+                <ScalarProperty Name="dateofpayment" ColumnName="dateofpayment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="TechnoPark.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+                <ScalarProperty Name="productname" ColumnName="productname" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="record">
+            <EntityTypeMapping TypeName="TechnoPark.record">
+              <MappingFragment StoreEntitySet="record">
+                <ScalarProperty Name="idrecord" ColumnName="idrecord" />
+                <ScalarProperty Name="idclient" ColumnName="idclient" />
+                <ScalarProperty Name="idemployee" ColumnName="idemployee" />
+                <ScalarProperty Name="idservices" ColumnName="idservices" />
+                <ScalarProperty Name="recorddate" ColumnName="recorddate" />
+                <ScalarProperty Name="recordtime" ColumnName="recordtime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="TechnoPark.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="idrole" ColumnName="idrole" />
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service">
+            <EntityTypeMapping TypeName="TechnoPark.service">
+              <MappingFragment StoreEntitySet="service">
+                <ScalarProperty Name="idservice" ColumnName="idservice" />
+                <ScalarProperty Name="servicename" ColumnName="servicename" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supply">
+            <EntityTypeMapping TypeName="TechnoPark.supply">
+              <MappingFragment StoreEntitySet="supply">
+                <ScalarProperty Name="idsupply" ColumnName="idsupply" />
+                <ScalarProperty Name="idorder" ColumnName="idorder" />
+                <ScalarProperty Name="dateofdelivery" ColumnName="dateofdelivery" />
+                <ScalarProperty Name="deliveryaddress" ColumnName="deliveryaddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

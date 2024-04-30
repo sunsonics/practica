@@ -1,0 +1,21 @@
+﻿<Page x:Class="SaharovaPractica.Avtor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SaharovaPractica"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Avtor">
+
+    <Grid>
+        <TextBox x:Name="LoginP" HorizontalAlignment="Left" Margin="305,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <TextBox x:Name="PasswordP" HorizontalAlignment="Left" Margin="305,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="305,110,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.803,0.965"/>
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="305,178,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Whod" Content="Войти" HorizontalAlignment="Left" Margin="335,269,0,0" VerticalAlignment="Top" Width="120" Click="Whod_Click"/>
+
+        <!-- Добавляем элемент Frame для навигации -->
+      
+    </Grid>
+</Page>
